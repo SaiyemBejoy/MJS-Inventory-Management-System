@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Inventory_Management_System.role>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Roles</h2>
+
+<p>
+    @Html.ActionLink("Create New Role", "Create", new { }, new {@class="btn btn-warning"})
+</p>
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            @Html.DisplayName("Role name")
+        </th>
+        <th>
+            @Html.DisplayName("Status")
+        </th>
+        <th>
+            @Html.DisplayName("Actions")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.r_name)
+        </td>
+        <td>
+            @{ 
+                if(item.r_status == Convert.ToByte(1))
+                {
+                    <p>Active</p>
+                }else if(item.r_status == Convert.ToByte(0))
+                {
+                    <p>Inactive</p>
+                }
+            }
+            @*@Html.DisplayFor(modelItem => item.r_status)*@
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.r_id }, new { @class = "btn btn-info" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.r_id }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.r_id }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

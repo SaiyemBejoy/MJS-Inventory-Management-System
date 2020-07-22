@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Inventory_Management_System.user>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users</h2>
+
+<p>
+    @Html.ActionLink("Create New User", "Create", new { }, new { @class = "btn btn-warning" })
+</p>
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            @Html.DisplayName("Name")
+        </th>
+        <th>
+            @Html.DisplayName("Username")
+        </th>
+        <th>
+            @Html.DisplayName("Email")
+        </th>
+        <th>
+            @Html.DisplayName("Status")
+        </th>
+        <th>
+            @Html.DisplayName("Role")
+        </th>
+        <th>
+            @Html.DisplayName("Actions")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.u_name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.u_username)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.u_email)
+    </td>
+    <td>
+        @{
+            if (item.u_status == Convert.ToByte(1))
+            {
+                <p>Active</p>
+            }
+            else if (item.u_status == Convert.ToByte(0))
+            {
+                <p>Inactive</p>
+            }
+        }
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.role.r_name)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.u_id }, new { @class = "btn btn-info" }) |
+        @Html.ActionLink("Details", "Details", new { id = item.u_id }, new { @class = "btn btn-success" }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.u_id }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+}
+
+</table>

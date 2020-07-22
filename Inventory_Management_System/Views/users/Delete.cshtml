@@ -1,0 +1,88 @@
+﻿@model Inventory_Management_System.user
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this user?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.u_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Username")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.u_username)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Password")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.u_password)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Phone no")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.u_phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Email")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.u_email)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Status")
+        </dt>
+
+        <dd>
+            @{
+                if (Model.u_status == Convert.ToByte(1))
+                {
+                    <p>Active</p>
+                }
+                else if (Model.u_status == Convert.ToByte(0))
+                {
+                    <p>Inactive</p>
+                }
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Role as")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.role.r_name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    @Html.ActionLink("Back to List", "Index", "Users", new { @class = "btn btn-primary" }) |
+    <input type="submit" value="Delete" class="btn btn-success" />
+</div>
+    }
+</div>

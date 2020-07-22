@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Inventory_Management_System.category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Categories</h2>
+
+<p>
+    @Html.ActionLink("Create New Category", "Create", new { }, new { @class = "btn btn-warning" })
+</p>
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            @Html.DisplayName("Category name")
+        </th>
+        <th>
+            @Html.DisplayName("Status")
+        </th>
+        <th>
+            @Html.DisplayName("Actions")
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cat_name)
+        </td>
+        <td>
+            @{
+                if (item.cat_status == Convert.ToByte(1))
+                {
+                    <p>Active</p>
+                }
+                else if (item.cat_status == Convert.ToByte(0))
+                {
+                    <p>Inactive</p>
+                }
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.cat_id }, new { @class = "btn btn-info" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.cat_id }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.cat_id }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
