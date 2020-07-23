@@ -76,6 +76,15 @@
       <End Role="product" EntitySet="products" />
       <End Role="PIDetail" EntitySet="PIDetails" />
     </AssociationSet>
+    <EntitySet Name="stocks" EntityType="inventoryDBModel.stock" />
+    <AssociationSet Name="FK__stock__st_proID__6FE99F9F" Association="inventoryDBModel.FK__stock__st_proID__6FE99F9F">
+      <End Role="product" EntitySet="products" />
+      <End Role="stock" EntitySet="stocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__stock__st_purcha__70DDC3D8" Association="inventoryDBModel.FK__stock__st_purcha__70DDC3D8">
+      <End Role="purchaseInvoice" EntitySet="purchaseInvoices" />
+      <End Role="stock" EntitySet="stocks" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="st_getLoginDetails_Result">
     <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
@@ -100,6 +109,9 @@
     <Property Name="pro_barcode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="pro_expireyDate" Type="DateTime" Precision="0" />
     <NavigationProperty Name="PIDetails" Relationship="inventoryDBModel.FK_PIDetails_products" FromRole="product" ToRole="PIDetail" />
+    <NavigationProperty Name="stocks" Relationship="inventoryDBModel.FK__stock__st_proID__6FE99F9F" FromRole="product" ToRole="stock" />
+    <Property Name="pro_buyingPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="pro_sellingPrice" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
   <EntityType Name="purchaseInvoice">
     <Key>
@@ -110,6 +122,7 @@
     <Property Name="pi_suppID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="PIDetails" Relationship="inventoryDBModel.FK__PIDetails__pid_p__656C112C" FromRole="purchaseInvoice" ToRole="PIDetail" />
     <NavigationProperty Name="supplier" Relationship="inventoryDBModel.FK__purchaseI__pi_su__628FA481" FromRole="purchaseInvoice" ToRole="supplier" />
+    <NavigationProperty Name="stocks" Relationship="inventoryDBModel.FK__stock__st_purcha__70DDC3D8" FromRole="purchaseInvoice" ToRole="stock" />
   </EntityType>
   <EntityType Name="supplier">
     <Key>
@@ -155,6 +168,42 @@
       </Principal>
       <Dependent Role="PIDetail">
         <PropertyRef Name="pid_proID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="stock">
+    <Key>
+      <PropertyRef Name="st_id" />
+    </Key>
+    <Property Name="st_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="st_proID" Type="Int32" Nullable="false" />
+    <Property Name="st_proCarton" Type="Int32" />
+    <Property Name="st_proPieces" Type="Int32" />
+    <Property Name="st_purchaseInvID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="product" Relationship="inventoryDBModel.FK__stock__st_proID__6FE99F9F" FromRole="stock" ToRole="product" />
+    <NavigationProperty Name="purchaseInvoice" Relationship="inventoryDBModel.FK__stock__st_purcha__70DDC3D8" FromRole="stock" ToRole="purchaseInvoice" />
+  </EntityType>
+  <Association Name="FK__stock__st_proID__6FE99F9F">
+    <End Type="inventoryDBModel.product" Role="product" Multiplicity="1" />
+    <End Type="inventoryDBModel.stock" Role="stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="pro_id" />
+      </Principal>
+      <Dependent Role="stock">
+        <PropertyRef Name="st_proID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__stock__st_purcha__70DDC3D8">
+    <End Type="inventoryDBModel.purchaseInvoice" Role="purchaseInvoice" Multiplicity="1" />
+    <End Type="inventoryDBModel.stock" Role="stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="purchaseInvoice">
+        <PropertyRef Name="pi_id" />
+      </Principal>
+      <Dependent Role="stock">
+        <PropertyRef Name="st_purchaseInvID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

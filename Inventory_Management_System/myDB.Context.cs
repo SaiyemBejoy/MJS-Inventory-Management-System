@@ -34,6 +34,7 @@ namespace Inventory_Management_System
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<purchaseInvoice> purchaseInvoices { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
+        public virtual DbSet<stock> stocks { get; set; }
     
         public virtual ObjectResult<st_getLoginDetails_Result> st_getLoginDetails(string user, string pass)
         {

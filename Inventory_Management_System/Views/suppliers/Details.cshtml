@@ -1,0 +1,51 @@
+﻿@model Inventory_Management_System.supplier
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Supplier</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sup_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Address")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sup_address)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Phone no")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sup_phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Opening balance")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sup_openingBalance)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.sup_id }, new { @class = "btn btn-success" })
+</p>

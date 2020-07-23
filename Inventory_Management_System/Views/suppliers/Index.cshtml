@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Inventory_Management_System.supplier>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Suppliers</h2>
+
+<p>
+    @Html.ActionLink("Add new Supplier", "Create", new { }, new { @class="btn btn-warning" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Suppliers Name")
+        </th>
+        <th>
+            @Html.DisplayName("Address")
+        </th>
+        <th>
+            @Html.DisplayName("Phone no")
+        </th>
+        <th>
+            @Html.DisplayName("Opening Balance")
+        </th>
+        <th>
+            @Html.DisplayName("Actions")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.sup_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sup_address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sup_phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sup_openingBalance)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.sup_id }, new { @class = "btn btn-info" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.sup_id }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.sup_id }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

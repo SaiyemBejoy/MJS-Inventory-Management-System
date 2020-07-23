@@ -19,6 +19,7 @@ namespace Inventory_Management_System.Controllers
         public ActionResult Create()
         {
             var data = (from x in obj.suppliers select new { x.sup_id, x.sup_name}).ToList();
+            ViewBag.suppList = new SelectList(data, "sup_id", "sup_name");
 
             return View();
         }

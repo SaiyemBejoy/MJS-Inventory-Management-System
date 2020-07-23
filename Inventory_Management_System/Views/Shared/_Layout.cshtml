@@ -25,10 +25,13 @@
                     <li>@Html.ActionLink("Users", "Index", "Users")</li>
                     <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
                     <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+                    <li>@Html.ActionLink("Suppliers", "Index", "Suppliers")</li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="text-primary" style="margin-top:15px;">You are logged in as <b class="text-capitalize">@Session["name"] (@Session["role"])</b></li>
+                    <li class="text-primary" style="margin-top:15px;">
+                        You are logged in as <b class="text-capitalize">@Session["name"] (@Session["role"])</b>
+                    </li>
                     <li>@Html.ActionLink("Logout", "Logout", "Auth")</li>
                 </ul>
             </div>

@@ -16,6 +16,9 @@
         <AssociationConnector Association="inventoryDBModel.FK__PIDetails__pid_p__656C112C" />
         <AssociationConnector Association="inventoryDBModel.FK__purchaseI__pi_su__628FA481" />
         <AssociationConnector Association="inventoryDBModel.FK_PIDetails_products" />
+        <EntityTypeShape EntityType="inventoryDBModel.stock" Width="1.5" PointX="13" PointY="5.125" />
+        <AssociationConnector Association="inventoryDBModel.FK__stock__st_proID__6FE99F9F" />
+        <AssociationConnector Association="inventoryDBModel.FK__stock__st_purcha__70DDC3D8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

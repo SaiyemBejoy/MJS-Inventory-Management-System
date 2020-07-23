@@ -18,6 +18,7 @@ namespace Inventory_Management_System
         public purchaseInvoice()
         {
             this.PIDetails = new HashSet<PIDetail>();
+            this.stocks = new HashSet<stock>();
         }
     
         public long pi_id { get; set; }
@@ -27,5 +28,7 @@ namespace Inventory_Management_System
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PIDetail> PIDetails { get; set; }
         public virtual supplier supplier { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<stock> stocks { get; set; }
     }
 }

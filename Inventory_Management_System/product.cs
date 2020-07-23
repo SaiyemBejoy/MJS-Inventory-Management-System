@@ -18,14 +18,19 @@ namespace Inventory_Management_System
         public product()
         {
             this.PIDetails = new HashSet<PIDetail>();
+            this.stocks = new HashSet<stock>();
         }
     
         public int pro_id { get; set; }
         public string pro_name { get; set; }
         public string pro_barcode { get; set; }
         public Nullable<System.DateTime> pro_expireyDate { get; set; }
+        public Nullable<decimal> pro_buyingPrice { get; set; }
+        public Nullable<decimal> pro_sellingPrice { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PIDetail> PIDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<stock> stocks { get; set; }
     }
 }

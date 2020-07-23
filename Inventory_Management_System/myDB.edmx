@@ -29,6 +29,8 @@
           <Property Name="pro_name" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="pro_barcode" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="pro_expireyDate" Type="date" />
+          <Property Name="pro_buyingPrice" Type="money" />
+          <Property Name="pro_sellingPrice" Type="money" />
         </EntityType>
         <EntityType Name="purchaseInvoice">
           <Key>
@@ -45,6 +47,16 @@
           <Property Name="r_id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="r_name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="r_status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="stock">
+          <Key>
+            <PropertyRef Name="st_id" />
+          </Key>
+          <Property Name="st_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="st_proID" Type="int" Nullable="false" />
+          <Property Name="st_proCarton" Type="int" />
+          <Property Name="st_proPieces" Type="int" />
+          <Property Name="st_purchaseInvID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="suppliers">
           <Key>
@@ -93,6 +105,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__stock__st_proID__6FE99F9F">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="stock" Type="Self.stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="stock">
+              <PropertyRef Name="st_proID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__stock__st_purcha__70DDC3D8">
+          <End Role="purchaseInvoice" Type="Self.purchaseInvoice" Multiplicity="1" />
+          <End Role="stock" Type="Self.stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="purchaseInvoice">
+              <PropertyRef Name="pi_id" />
+            </Principal>
+            <Dependent Role="stock">
+              <PropertyRef Name="st_purchaseInvID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__users__u_roleID__3B75D760">
           <End Role="roles" Type="Self.roles" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -132,6 +168,7 @@
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="purchaseInvoice" EntityType="Self.purchaseInvoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="stock" EntityType="Self.stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="suppliers" EntityType="Self.suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__PIDetails__pid_p__656C112C" Association="Self.FK__PIDetails__pid_p__656C112C">
@@ -141,6 +178,14 @@
           <AssociationSet Name="FK__purchaseI__pi_su__628FA481" Association="Self.FK__purchaseI__pi_su__628FA481">
             <End Role="suppliers" EntitySet="suppliers" />
             <End Role="purchaseInvoice" EntitySet="purchaseInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock__st_proID__6FE99F9F" Association="Self.FK__stock__st_proID__6FE99F9F">
+            <End Role="products" EntitySet="products" />
+            <End Role="stock" EntitySet="stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock__st_purcha__70DDC3D8" Association="Self.FK__stock__st_purcha__70DDC3D8">
+            <End Role="purchaseInvoice" EntitySet="purchaseInvoice" />
+            <End Role="stock" EntitySet="stock" />
           </AssociationSet>
           <AssociationSet Name="FK__users__u_roleID__3B75D760" Association="Self.FK__users__u_roleID__3B75D760">
             <End Role="roles" EntitySet="roles" />
@@ -231,6 +276,15 @@
             <End Role="product" EntitySet="products" />
             <End Role="PIDetail" EntitySet="PIDetails" />
           </AssociationSet>
+          <EntitySet Name="stocks" EntityType="inventoryDBModel.stock" />
+          <AssociationSet Name="FK__stock__st_proID__6FE99F9F" Association="inventoryDBModel.FK__stock__st_proID__6FE99F9F">
+            <End Role="product" EntitySet="products" />
+            <End Role="stock" EntitySet="stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock__st_purcha__70DDC3D8" Association="inventoryDBModel.FK__stock__st_purcha__70DDC3D8">
+            <End Role="purchaseInvoice" EntitySet="purchaseInvoices" />
+            <End Role="stock" EntitySet="stocks" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="st_getLoginDetails_Result">
           <Property Type="String" Name="Username" Nullable="false" MaxLength="50" />
@@ -255,6 +309,9 @@
           <Property Name="pro_barcode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="pro_expireyDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="PIDetails" Relationship="inventoryDBModel.FK_PIDetails_products" FromRole="product" ToRole="PIDetail" />
+          <NavigationProperty Name="stocks" Relationship="inventoryDBModel.FK__stock__st_proID__6FE99F9F" FromRole="product" ToRole="stock" />
+          <Property Name="pro_buyingPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="pro_sellingPrice" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="purchaseInvoice">
           <Key>
@@ -265,6 +322,7 @@
           <Property Name="pi_suppID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PIDetails" Relationship="inventoryDBModel.FK__PIDetails__pid_p__656C112C" FromRole="purchaseInvoice" ToRole="PIDetail" />
           <NavigationProperty Name="supplier" Relationship="inventoryDBModel.FK__purchaseI__pi_su__628FA481" FromRole="purchaseInvoice" ToRole="supplier" />
+          <NavigationProperty Name="stocks" Relationship="inventoryDBModel.FK__stock__st_purcha__70DDC3D8" FromRole="purchaseInvoice" ToRole="stock" />
         </EntityType>
         <EntityType Name="supplier">
           <Key>
@@ -310,6 +368,42 @@
             </Principal>
             <Dependent Role="PIDetail">
               <PropertyRef Name="pid_proID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="stock">
+          <Key>
+            <PropertyRef Name="st_id" />
+          </Key>
+          <Property Name="st_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="st_proID" Type="Int32" Nullable="false" />
+          <Property Name="st_proCarton" Type="Int32" />
+          <Property Name="st_proPieces" Type="Int32" />
+          <Property Name="st_purchaseInvID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="inventoryDBModel.FK__stock__st_proID__6FE99F9F" FromRole="stock" ToRole="product" />
+          <NavigationProperty Name="purchaseInvoice" Relationship="inventoryDBModel.FK__stock__st_purcha__70DDC3D8" FromRole="stock" ToRole="purchaseInvoice" />
+        </EntityType>
+        <Association Name="FK__stock__st_proID__6FE99F9F">
+          <End Type="inventoryDBModel.product" Role="product" Multiplicity="1" />
+          <End Type="inventoryDBModel.stock" Role="stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="stock">
+              <PropertyRef Name="st_proID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__stock__st_purcha__70DDC3D8">
+          <End Type="inventoryDBModel.purchaseInvoice" Role="purchaseInvoice" Multiplicity="1" />
+          <End Type="inventoryDBModel.stock" Role="stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="purchaseInvoice">
+              <PropertyRef Name="pi_id" />
+            </Principal>
+            <Dependent Role="stock">
+              <PropertyRef Name="st_purchaseInvID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -372,6 +466,8 @@
           <EntitySetMapping Name="products">
             <EntityTypeMapping TypeName="inventoryDBModel.product">
               <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="pro_sellingPrice" ColumnName="pro_sellingPrice" />
+                <ScalarProperty Name="pro_buyingPrice" ColumnName="pro_buyingPrice" />
                 <ScalarProperty Name="pro_expireyDate" ColumnName="pro_expireyDate" />
                 <ScalarProperty Name="pro_barcode" ColumnName="pro_barcode" />
                 <ScalarProperty Name="pro_name" ColumnName="pro_name" />
@@ -396,6 +492,17 @@
                 <ScalarProperty Name="sup_address" ColumnName="sup_address" />
                 <ScalarProperty Name="sup_name" ColumnName="sup_name" />
                 <ScalarProperty Name="sup_id" ColumnName="sup_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stocks">
+            <EntityTypeMapping TypeName="inventoryDBModel.stock">
+              <MappingFragment StoreEntitySet="stock">
+                <ScalarProperty Name="st_purchaseInvID" ColumnName="st_purchaseInvID" />
+                <ScalarProperty Name="st_proPieces" ColumnName="st_proPieces" />
+                <ScalarProperty Name="st_proCarton" ColumnName="st_proCarton" />
+                <ScalarProperty Name="st_proID" ColumnName="st_proID" />
+                <ScalarProperty Name="st_id" ColumnName="st_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

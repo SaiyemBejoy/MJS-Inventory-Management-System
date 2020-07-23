@@ -54,6 +54,8 @@
     <EntitySetMapping Name="products">
       <EntityTypeMapping TypeName="inventoryDBModel.product">
         <MappingFragment StoreEntitySet="products">
+          <ScalarProperty Name="pro_sellingPrice" ColumnName="pro_sellingPrice" />
+          <ScalarProperty Name="pro_buyingPrice" ColumnName="pro_buyingPrice" />
           <ScalarProperty Name="pro_expireyDate" ColumnName="pro_expireyDate" />
           <ScalarProperty Name="pro_barcode" ColumnName="pro_barcode" />
           <ScalarProperty Name="pro_name" ColumnName="pro_name" />
@@ -78,6 +80,17 @@
           <ScalarProperty Name="sup_address" ColumnName="sup_address" />
           <ScalarProperty Name="sup_name" ColumnName="sup_name" />
           <ScalarProperty Name="sup_id" ColumnName="sup_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="stocks">
+      <EntityTypeMapping TypeName="inventoryDBModel.stock">
+        <MappingFragment StoreEntitySet="stock">
+          <ScalarProperty Name="st_purchaseInvID" ColumnName="st_purchaseInvID" />
+          <ScalarProperty Name="st_proPieces" ColumnName="st_proPieces" />
+          <ScalarProperty Name="st_proCarton" ColumnName="st_proCarton" />
+          <ScalarProperty Name="st_proID" ColumnName="st_proID" />
+          <ScalarProperty Name="st_id" ColumnName="st_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
