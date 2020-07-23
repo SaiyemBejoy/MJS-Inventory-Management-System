@@ -18,7 +18,17 @@ namespace Inventory_Management_System.Controllers
         public ActionResult Index()
         {
             var users = db.users.Include(u => u.role);
-            return View(users.ToList());
+
+            if (Session["role"] == null)
+            {
+                return RedirectToAction("Index", "Auth");
+            }
+            else if (Session["role"].ToString() == "admin")
+            {
+                return View(users.ToList());
+            }
+
+            return RedirectToAction("Index", "Auth");
         }
 
         // GET: users/Details/5

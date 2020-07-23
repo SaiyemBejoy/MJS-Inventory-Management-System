@@ -17,7 +17,16 @@ namespace Inventory_Management_System.Controllers
         // GET: roles
         public ActionResult Index()
         {
-            return View(db.roles.ToList());
+            if(Session["role"] == null)
+            {
+                return RedirectToAction("Index", "Auth");
+            }
+            else if (Session["role"].ToString() == "admin")
+            {
+                return View(db.roles.ToList());
+            }
+
+            return RedirectToAction("Index", "Auth");
         }
 
         // GET: roles/Details/5

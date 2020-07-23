@@ -17,7 +17,17 @@ namespace Inventory_Management_System.Controllers
         // GET: categories
         public ActionResult Index()
         {
-            return View(db.categories.ToList());
+            if (Session["role"] == null)
+            {
+                return RedirectToAction("Index", "Auth");
+            }
+            else if (Session["role"].ToString() == "admin")
+            {
+                return View(db.categories.ToList());
+            }
+
+            return RedirectToAction("Index", "Auth");
+            
         }
 
         // GET: categories/Details/5

@@ -28,7 +28,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="text-primary" style="margin-top:15px;">You are logged in as <b class="text-capitalize">@Session["name"]</b></li>
+                    <li class="text-primary" style="margin-top:15px;">You are logged in as <b class="text-capitalize">@Session["name"] (@Session["role"])</b></li>
                     <li>@Html.ActionLink("Logout", "Logout", "Auth")</li>
                 </ul>
             </div>

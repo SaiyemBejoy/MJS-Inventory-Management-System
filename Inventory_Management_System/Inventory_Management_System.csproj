@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\categoriesController.cs" />
+    <Compile Include="Controllers\PurchaseInvoiceController.cs" />
     <Compile Include="Controllers\rolesController.cs" />
     <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -175,11 +176,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>myDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="PIDetail.cs">
+      <DependentUpon>myDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="product.cs">
+      <DependentUpon>myDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="purchaseInvoice.cs">
+      <DependentUpon>myDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="role.cs">
       <DependentUpon>myDB.tt</DependentUpon>
     </Compile>
     <Compile Include="st_getLoginDetails_Result.cs">
+      <DependentUpon>myDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="supplier.cs">
       <DependentUpon>myDB.tt</DependentUpon>
     </Compile>
     <Compile Include="user.cs">
@@ -208,6 +221,7 @@
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\Auth\Main.cshtml" />
+    <Content Include="Views\PurchaseInvoice\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
